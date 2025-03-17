@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidLibrary)
+    id("com.google.devtools.ksp") version "2.0.20-1.0.25"
 }
 
 kotlin {
@@ -33,19 +34,20 @@ kotlin {
     }
     
     sourceSets {
-        val ktorVersion = "2.3.8"
-        val koinVersion = "4.0.0-RC1"
-        val koin_annotations_version = "1.4.0-RC4"
-        commonMain.dependencies {
-            //put your multiplatform dependencies here
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.serialization.kotlinx.json)
-            implementation(libs.ktor.client.logging)
-            implementation(libs.koin.core)
-            implementation(libs.koin.test)
-            implementation(libs.kotlinx.coroutines.core)
-            api(libs.koin.annotations)
+
+        val commonMain by getting {
+            kotlin.srcDir("build/generated/ksp/metadata")
+            dependencies {
+                //put your multiplatform dependencies here
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.koin.core)
+                implementation(libs.koin.test)
+                implementation(libs.kotlinx.coroutines.core)
+                api(libs.koin.annotations)
+            }
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -69,5 +71,15 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    add("kspCommonMainMetadata", "io.insert-koin:koin-ksp-compiler:1.4.0-RC4")
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>>().configureEach {
+    if (name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
     }
 }

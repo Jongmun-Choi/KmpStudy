@@ -23,6 +23,20 @@ android {
         }
     }
     buildTypes {
+
+        debug {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+            isShrinkResources = false
+            isMinifyEnabled = false
+
+            buildConfigField("String", "ACCESS_URL", "\"https://github.com\"")
+            buildConfigField("String", "API_URL", "\"https://api.github.com\"")
+            buildConfigField("String","clientId", "\"Ov23lic4V0Q63ZTvg1j4\"")
+            buildConfigField("String", "clientSecret", "\"8310b2ef65d919da55704a87b32681fe2952fe9b\"")
+            buildConfigField("String", "Shared_Preference_Name", "\"TokenInfo\"")
+        }
+
         getByName("release") {
             isMinifyEnabled = false
         }
@@ -34,13 +48,37 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
+        dataBinding = true
+    }
 }
 
 dependencies {
     implementation(projects.shared)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.material3)
     implementation(libs.androidx.activity.compose)
-    debugImplementation(libs.compose.ui.tooling)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.kotlinx.coroutines.core.v190rc2)
+    implementation(libs.kotlinx.coroutines.android)
+
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.androidx.material3.android)
+
+    // Coil
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.browser)
+    debugImplementation(libs.ui.tooling)
+
+    // EncryptedSharedPreferences
+    implementation(libs.androidx.security.crypto.ktx)
+
 }
