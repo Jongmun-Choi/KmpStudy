@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrainsKotlinPluginSerialization)
     id("com.google.devtools.ksp") version "2.0.20-1.0.25"
 }
 
@@ -36,10 +37,12 @@ kotlin {
     sourceSets {
 
         val commonMain by getting {
+
             kotlin.srcDir("build/generated/ksp/metadata")
             dependencies {
                 //put your multiplatform dependencies here
                 implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.cio)
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.ktor.client.logging)
@@ -73,6 +76,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
+
 
 dependencies {
     add("kspCommonMainMetadata", "io.insert-koin:koin-ksp-compiler:1.4.0-RC4")

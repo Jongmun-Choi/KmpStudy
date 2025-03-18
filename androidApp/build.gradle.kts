@@ -30,8 +30,6 @@ android {
             isShrinkResources = false
             isMinifyEnabled = false
 
-            buildConfigField("String", "ACCESS_URL", "\"https://github.com\"")
-            buildConfigField("String", "API_URL", "\"https://api.github.com\"")
             buildConfigField("String","clientId", "\"Ov23lic4V0Q63ZTvg1j4\"")
             buildConfigField("String", "clientSecret", "\"8310b2ef65d919da55704a87b32681fe2952fe9b\"")
             buildConfigField("String", "Shared_Preference_Name", "\"TokenInfo\"")
@@ -62,16 +60,19 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3.android)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.foundation.layout.android)
-    implementation(libs.kotlinx.coroutines.core.v190rc2)
+
+    //Coroutines
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-
+    //Koin
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
-    implementation(libs.androidx.material3.android)
+
 
     // Coil
     implementation(libs.coil.compose)
@@ -81,4 +82,12 @@ dependencies {
     // EncryptedSharedPreferences
     implementation(libs.androidx.security.crypto.ktx)
 
+    //Coroutine
+
+
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }

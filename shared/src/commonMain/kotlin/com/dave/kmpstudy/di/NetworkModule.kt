@@ -4,5 +4,5 @@ import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 
 @Module
-@ComponentScan("com.dave.kmpstudy.data.network")
+@ComponentScan("com.dave.kmpstudy.network")
 class NetworkModule

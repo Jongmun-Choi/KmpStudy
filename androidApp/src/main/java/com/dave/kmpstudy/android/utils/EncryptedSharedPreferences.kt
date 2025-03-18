@@ -6,7 +6,7 @@ import androidx.security.crypto.MasterKey
 import com.dave.kmpstudy.android.BuildConfig
 import com.dave.kmpstudy.data.model.AccessToken
 import androidx.core.content.edit
-import com.dave.kmpstudy.android.KmpStudyApplication.Companion.context
+import com.dave.kmpstudy.android.GithubApp.Companion.context
 
 object EncryptedSharedPreferencesHelper {
     private val masterKeyAlias = MasterKey
