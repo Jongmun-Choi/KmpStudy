@@ -2,8 +2,11 @@ package com.dave.kmpstudy.network
 
 import com.dave.kmpstudy.data.model.AccessToken
 import com.dave.kmpstudy.data.model.AccessTokenRequestInfo
+import com.dave.kmpstudy.data.model.User
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -25,11 +28,23 @@ class GithubNetworkApi(private val httpClient: HttpClient) : GithubApi{
             }
             result.body()
         } catch (e: Exception) {
-            AccessToken("${e.message}")
+            println("error : ${e.message}")
+            AccessToken("")
         }
     }
 
-    override suspend fun getUserList() {
-
+    override suspend fun getUserList(query: String, page: Int) : List<User>{
+        val url = "${GITHUB_BASE_API_URL}/search/users"
+        return try {
+            val result = httpClient.get(url) {
+                parameter("q", query)
+                parameter("page", page)
+                parameter("per_page", 10)
+            }
+            result.body()
+        }catch (e : Exception) {
+            println("error : ${e.message}")
+            emptyList()
+        }
     }
 }
