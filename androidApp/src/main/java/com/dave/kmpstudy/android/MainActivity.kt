@@ -6,17 +6,22 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.dave.kmpstudy.Greeting
+import androidx.lifecycle.lifecycleScope
 import com.dave.kmpstudy.android.view.login.LoginScreen
+import com.dave.kmpstudy.android.view.users.UserListActivity
+import com.dave.kmpstudy.android.viewmodel.LoginViewModel
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel : LoginViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setCollection()
         setContent {
             MyApplicationTheme {
                 LoginScreen(
@@ -24,6 +29,16 @@ class MainActivity : ComponentActivity() {
                         clickLogin()
                     }
                 )
+            }
+        }
+    }
+
+    private fun setCollection() {
+        lifecycleScope.launch {
+            viewModel.loginSuccess.collect { isLoginSuccess ->
+                if(isLoginSuccess) {
+                    startActivity(Intent(this@MainActivity, UserListActivity::class.java))
+                }
             }
         }
     }
@@ -43,9 +58,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        intent.data?.getQueryParameter("code")?.let { code ->
-//            viewModel.getAccessToken(code)
-        }
+        intent.data?.getQueryParameter("code")?.let(viewModel::getAccessToken)
     }
 
 }
