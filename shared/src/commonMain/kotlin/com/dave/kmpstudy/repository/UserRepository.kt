@@ -1,6 +1,7 @@
 package com.dave.kmpstudy.repository
 
 import com.dave.kmpstudy.network.GithubApi
+
 import org.koin.core.annotation.Single
 
 @Single

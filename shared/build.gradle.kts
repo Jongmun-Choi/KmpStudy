@@ -49,6 +49,7 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.test)
                 implementation(libs.kotlinx.coroutines.core)
+
                 api(libs.koin.annotations)
             }
         }

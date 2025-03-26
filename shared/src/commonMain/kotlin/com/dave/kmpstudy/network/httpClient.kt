@@ -25,6 +25,7 @@ fun getHttpClient() = HttpClient(CIO) {
     defaultRequest {
         header("Accept", "application/json")
         header("content-type", "application/json")
+//        header("Authorization", "Bearer ${}")
     }
 
     install(Logging) {

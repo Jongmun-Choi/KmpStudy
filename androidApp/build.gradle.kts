@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.foundation.layout.android)
 
+
+
     //Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
@@ -77,12 +79,16 @@ dependencies {
     // Coil
     implementation(libs.coil.compose)
     implementation(libs.androidx.browser)
+    implementation(libs.androidx.paging.common.android)
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
     debugImplementation(libs.ui.tooling)
 
     // EncryptedSharedPreferences
     implementation(libs.androidx.security.crypto.ktx)
 
-    //Coroutine
+    //Glide
+    implementation(libs.landscapist.glide)
 
 
 }
